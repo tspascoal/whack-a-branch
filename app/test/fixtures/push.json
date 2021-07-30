@@ -1,0 +1,21 @@
+{
+  "ref": "refs/heads/deleteme",
+  "repository": {
+    "name": "test",
+    "full_name": "tspascoal/test",
+    "owner": {
+      "login": "tspascoal",
+      "email": null
+    },
+    "fork": false,
+    "default_branch": "main",
+    "master_branch": "main"
+  },
+  "created": true,
+  "deleted": false,
+  "forced": false,
+  "base_ref": null,
+  "installation": {
+    "id": 2
+  }
+}
