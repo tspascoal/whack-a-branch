@@ -1,0 +1,61 @@
+name: "CI"
+
+on:
+  push: 
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  CodeQL-Build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
+    # Initializes the CodeQL tools for scanning.
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v1
+      with:
+        languages: javascript
+        config-file: ./.github/codeql/codeql-config.yml
+
+    - run: npm ci
+      working-directory: app
+    - run: npm run build
+      working-directory: app
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v1
+
+  BuildAnalyzeAndTest:
+    name: Build & Test
+
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - run: npm ci
+    - run: npm run all
+    
+    - name: Publish Unit Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v1
+      if: always()
+      with:
+        files: 'app/reports/**/junit.xml'
+
+    - uses: danhunsaker/clover-reporter-action@v0.2.17-clover
+      if: github.event_name == 'pull_request'
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        clover-file: app/coverage/clover.xml
+
