@@ -1,8 +1,8 @@
 # whack-a-branch
 
-> A GitHub App built with [Probot](https://github.com/probot/probot) that Play whack a mole with branches.
+> A GitHub App built with [Probot](https://github.com/probot/probot) that Play [whack a mole](https://en.wikipedia.org/wiki/Whac-A-Mole) with branches.
 
-Automatically delete branches that do not meet your criteria.
+Automatically delete branches that do not meet your criteria as soon as they are pushed.
 
 You can specify the (with patterns) the branches that you want to keep and the ones you want to delete.
 
