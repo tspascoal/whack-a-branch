@@ -1,0 +1,6 @@
+name: "codeql ignore dist config"
+
+paths:
+  - app/src
+paths-ignore:
+  - app/lib
