@@ -25,7 +25,9 @@ jobs:
         config-file: ./.github/codeql/codeql-config.yml
 
     - run: npm ci
+      working-directory: app
     - run: npm run build
+      working-directory: app
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
