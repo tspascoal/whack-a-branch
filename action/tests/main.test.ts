@@ -106,7 +106,7 @@ describe('run', () => {
     const deleteMock = mock_delete_ref_multiple_calls('dev/fix[1-2]', 2)
 
     process.env['INPUT_BRANCHES-KEEP'] = '**'
-    process.env['INPUT_BRANCHES-DELETE'] = 'dummy,noway/**,dev/**'
+    process.env['INPUT_BRANCHES-DELETE'] = 'dummy, noway/**, dev/**'
     process.env['INPUT_DELETE-IF-NO-MATCH'] = 'false'
     process.env['INPUT_DRY-RUN'] = 'false'
 

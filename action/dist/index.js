@@ -125,8 +125,8 @@ function run() {
             const deletedBranchs = [];
             const config = {
                 branches: {
-                    keep: branchesKeep === null || branchesKeep === void 0 ? void 0 : branchesKeep.split(','),
-                    delete: branchesDelete === null || branchesDelete === void 0 ? void 0 : branchesDelete.split(',')
+                    keep: branchesKeep === null || branchesKeep === void 0 ? void 0 : branchesKeep.split(',').map(s => s.trim()),
+                    delete: branchesDelete === null || branchesDelete === void 0 ? void 0 : branchesDelete.split(',').map(s => s.trim())
                 },
                 deleteIfNoMatch
             };

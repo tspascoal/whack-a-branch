@@ -40,8 +40,8 @@ export async function run(): Promise<void> {
     const deletedBranchs: string[] = []
     const config: Configuration = {
       branches: {
-        keep: branchesKeep?.split(','),
-        delete: branchesDelete?.split(',')
+        keep: branchesKeep?.split(',').map(s => s.trim()),
+        delete: branchesDelete?.split(',').map(s => s.trim())
       },
       deleteIfNoMatch
     }
