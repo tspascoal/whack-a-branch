@@ -130,7 +130,7 @@ The app is not hosted, only source code is provided. You have to do your own hos
 
 ```yaml
 - uses: tspascoal/whack-a-branch@v1
-  id: delete
+  id: deletebranches
   with:
     # list of branches to keep (comma separated list).
     # Default: "**"
@@ -153,7 +153,7 @@ The app is not hosted, only source code is provided. You have to do your own hos
     # Default: ${{ github.token }}
     token:''
 
-- run: echo we deleted ${{ steps.delete.output.deleted-branches }}
+- run: echo we deleted ${{ steps.deletebranches.outputs.deleted-branches }}
 ```
 
 See the App configuration section for more information about the parameters.
