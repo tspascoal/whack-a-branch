@@ -8,3 +8,7 @@ lib
 
 .vscode
 reports
+
+
+# DIRTY HACK - workaround for https://github.com/vercel/ncc/issues/320
+action/src/common/

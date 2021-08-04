@@ -1,19 +1,22 @@
 # whack-a-branch
 
-> A GitHub App built with [Probot](https://github.com/probot/probot) that Play [whack a mole](https://en.wikipedia.org/wiki/Whac-A-Mole) with branches.
+> A solution to delete branches that do not meet your defined criteria in terms of naming.
 
-Automatically delete branches that do not meet your criteria as soon as they are pushed.
+It has two different implementations:
+
+- A [GitHub App](#Application) built with [Probot](https://github.com/probot/probot) this solution works in real time and deletes the branches as soon as they are pushed.
+- A GitHub [action](#Action) to be used in a workflow to delete the branches on an [event](https://docs.github.com/en/actions/reference/events-that-trigger-workflows) of your choice, but most likely on a [scheduled](https://docs.github.com/en/actions/reference/events-that-trigger-workflows#scheduled-events) basis.
 
 You can specify the (with patterns) the branches that you want to keep and the ones you want to delete.
 
-> **Note:** This app is a _sample_ and you should run at your own risk, since deleting branches is a desctructive action that cannot be undone.
+> **Note:** This is a _sample_ and you should run at your own risk, since deleting branches is a desctructive action that cannot be undone.
 
 ## Application
 
 ### Setup
 
 In the `app` directory:
- 
+
 ```sh
 # Install dependencies
 npm install
@@ -52,7 +55,7 @@ branches:
     - 'dev/**' # Keep all branches in the `dev` folder (redundant with the keep pattern above)
   # The patterns list that defines if the branch will be deleted.
   # If there is a conflict between keep and delete, delete will be used.
-  delete:  
+  delete:
     - master
     - 'delete/**'
     - 'test*/**'
@@ -62,7 +65,7 @@ branches:
 
 ##### onlyNew
 
-If this value is set to true (default value: false), only pushes to new branches will be deleted, existing branches will be kept even if they match a deletion pattern. 
+If this value is set to true (default value: false), only pushes to new branches will be deleted, existing branches will be kept even if they match a deletion pattern.
 
 ##### branches
 
@@ -92,7 +95,7 @@ Only allow branches with no _folders_ in the name:
 
 ```yaml
 branches:
-  keep: 
+  keep:
     - '*'
   delete:
     - '*/**'
@@ -103,7 +106,7 @@ Only allow `main` and `feature` branches in a `dev` folder:
 ```yaml
 deleteIfNoMatch: true
 branches:
-  keep: 
+  keep:
     - 'main'
   delete:
     - 'dev/**'
@@ -120,6 +123,40 @@ branches:
 ### Hosting
 
 The app is not hosted, only source code is provided. You have to do your own hosting.
+
+## Action
+
+### Usage
+
+```yaml
+- uses: tspascoal/whack-a-branch@v1
+  id: delete
+  with:
+    # list of branches to keep (comma separated list).
+    # Default: "**"
+    branches-keep: '**'
+
+    # list of branches to delete (comma separated list).
+    branches-delete:
+    # If true, branches that do not meet the keel/delete criteria(s) will be deleted
+    # default: false
+    delete_if-no-match:
+
+    # If true, no action deletion will occur
+    # default: false
+    dry-run: true
+    # The separator used to separate the list of deleted branches for the action output.
+    # default value: ','.
+    output-separator:
+
+    # Token to be used to delete the branches.
+    # Default: ${{ github.token }}
+    token:''
+
+- run: echo we deleted ${{ steps.delete.output.deleted-branches }}
+```
+
+See the App configuration section for more information about the parameters.
 
 ## Contributing
 

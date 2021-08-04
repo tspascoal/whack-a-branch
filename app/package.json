@@ -12,19 +12,17 @@
     "probot-app"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --build",
     "lint": "eslint src --ext .ts",
     "start": "probot run ./lib/index.js",
     "test": "jest --coverage && npm run lint",
     "all": "npm run build && npm run lint && npm run test"
   },
   "dependencies": {
-    "minimatch": "^3.0.4",
     "probot": "^12.1.0"
   },
   "devDependencies": {
     "@types/jest": "26.0.24",
-    "@types/minimatch": "^3.0.5",
     "@types/node": "^14.14.19",
     "@typescript-eslint/eslint-plugin": "^4.28.5",
     "@typescript-eslint/parser": "^4.28.5",

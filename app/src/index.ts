@@ -1,6 +1,6 @@
 import { Probot } from "probot"
-import { DefaultConfiguration, Configuration } from "./configuration"
-import { DeletePredicate } from "./deletepredicate"
+import { DefaultConfiguration, Configuration } from "../../common/src/configuration"
+import { shouldDelete } from "../../common/src/deletepredicate"
 
 export = (app: Probot): void => {
   app.on("push", async (context) => {
@@ -12,7 +12,6 @@ export = (app: Probot): void => {
     const fork = context.payload.repository.fork
     const masterBranch = context.payload.repository.master_branch
 
-    
     context.log(`Received a push in ${ref} in ${owner}/${repo} deleted=${deleted} created=${created} fork=${fork}`)
 
     if (context.payload.deleted == false) {
@@ -38,7 +37,7 @@ export = (app: Probot): void => {
         return
       }
 
-      if (DeletePredicate.shouldDelete(config, ref)) {
+      if (shouldDelete(config, ref)) {
         context.log(`going to delete ${ref} in ${owner}/${repo}`)
 
         try {
