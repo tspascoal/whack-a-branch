@@ -1,0 +1,44 @@
+[
+    {
+        "name": "deleteme",
+        "commit": {
+            "sha": "311fb6dfeca86d159e9e8d430fe07e053d18281c"
+        },
+        "protected": false,
+        "protection": {
+            "enabled": false,
+            "required_status_checks": {
+                "enforcement_level": "off",
+                "contexts": []
+            }
+        }
+    },
+    {
+        "name": "dev/fix1",
+        "commit": {
+            "sha": "311fb6dfeca86d159e9e8d430fe07e053d18281c"
+        },
+        "protected": false,
+        "protection": {
+            "enabled": false,
+            "required_status_checks": {
+                "enforcement_level": "off",
+                "contexts": []
+            }
+        }
+    },
+    {
+        "name": "dev/fix2",
+        "commit": {
+            "sha": "400b8f5606259137a3e97240bd523c6450295855"
+        },
+        "protected": false,
+        "protection": {
+            "enabled": false,
+            "required_status_checks": {
+                "enforcement_level": "off",
+                "contexts": []
+            }
+        }
+    }
+]

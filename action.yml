@@ -1,0 +1,33 @@
+name: 'whack-a-branch'
+description: 'Delete branches that do not conform to your naming convention'
+author: 'Tiago Pascoal'
+inputs:
+  token:
+    required: true
+    description: 'GitHub token'
+    default: '{{ github_token }}'
+  branches-keep:
+    required: false
+    description: 'List of patterns (comma separated) of branches to keep.'
+    default: '**'
+  branches-delete:
+    required: false
+    description: 'List of patterns (comma separated) of branches to delete (wins over branches to keep)'
+  delete_if-no-match:
+    required: false
+    description: 'Delete branches that do not match the given pattern(s) [dangerous if true]'
+    default: 'false'
+  dry-run:
+    required: false
+    description: 'Dry run mode. Prints list of branches to delete instead of really deleting them'
+    default: 'false'
+  output-separator:
+    required: false
+    description: 'Separator used to separate branch names in output'
+    default: ','
+outputs:
+  deleted-branches:
+    description: 'List of branches that were deleted'
+runs:
+  using: 'node12'
+  main: 'action/dist/index.js'
