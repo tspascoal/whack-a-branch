@@ -9,7 +9,8 @@ on:
       - main
 
 jobs:
-  CodeQL-Build:
+  CodeQL:
+    name: "CodeQL Code Analysis"
 
     runs-on: ubuntu-latest
 
@@ -60,7 +61,7 @@ jobs:
       run: npm run all
       working-directory: action
 
-    - name: build and test action
+    - name: build and test app
       run: npm run all
       working-directory: app
 
@@ -70,23 +71,26 @@ jobs:
       if: always()
       with:
         files: |
-          app/common/**/junit.xml
+          common/reports/junit.xml
           app/reports/**/junit.xml
-          app/action/**/junit.xml
+          action/reports/junit.xml
 
-    - uses: danhunsaker/clover-reporter-action@v0.2.17-clover
+    - name: publish coverage for common
+      uses: danhunsaker/clover-reporter-action@v0.2.17-clover
       if: github.event_name == 'pull_request'
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         clover-file: common/coverage/clover.xml
 
-    - uses: danhunsaker/clover-reporter-action@v0.2.17-clover
+    - name: publish coverage for common
+      uses: danhunsaker/clover-reporter-action@v0.2.17-clover
       if: github.event_name == 'pull_request'
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         clover-file: app/coverage/clover.xml
 
-    - uses: danhunsaker/clover-reporter-action@v0.2.17-clover
+    - name: publish coverage for common
+      uses: danhunsaker/clover-reporter-action@v0.2.17-clover
       if: github.event_name == 'pull_request'
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
