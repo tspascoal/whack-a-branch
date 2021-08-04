@@ -138,13 +138,13 @@ The app is not hosted, only source code is provided. You have to do your own hos
 
     # list of branches to delete (comma separated list).
     branches-delete:
-    # If true, branches that do not meet the keel/delete criteria(s) will be deleted
+    # If true, branches that do not meet the keep/delete criteria(s) will be deleted
     # default: false
-    delete_if-no-match: false
+    delete-if-no-match: 'false'
 
     # If true, no action deletion will occur
     # default: false
-    dry-run: true
+    dry-run: 'true'
     # The separator used to separate the list of deleted branches for the action output.
     # default value: ','.
     output-separator:

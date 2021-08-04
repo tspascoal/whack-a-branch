@@ -9,6 +9,17 @@ import {Configuration} from './common/configuration'
 import {shouldDelete} from './common/deletepredicate'
 // ####### END DIRTY HACK
 
+// fix for https://github.com/actions/toolkit/issues/844
+function getBooleanInputFix(
+  name: string,
+  options: core.InputOptions,
+  defaultValue: boolean
+): boolean {
+  if (core.getInput(name, options).trim() === '') return defaultValue
+
+  return core.getBooleanInput(name, options)
+}
+
 export async function run(): Promise<void> {
   try {
     const githubToken = core.getInput('token', {required: true})
@@ -19,11 +30,16 @@ export async function run(): Promise<void> {
       required: false,
       trimWhitespace: true
     })
-    const deleteIfNoMatch: boolean = core.getBooleanInput(
+    const deleteIfNoMatch: boolean = getBooleanInputFix(
       'delete-if-no-match',
-      {required: false}
+      {required: false},
+      false
     )
-    const dryRun: boolean = core.getBooleanInput('dry-run', {required: false})
+    const dryRun: boolean = getBooleanInputFix(
+      'dry-run',
+      {required: false},
+      false
+    )
     const outputSeparator: string =
       core.getInput('output-separator', {required: false}) || ','
 

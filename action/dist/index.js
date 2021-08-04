@@ -102,6 +102,12 @@ const github = __importStar(__nccwpck_require__(438));
 const utils_1 = __nccwpck_require__(30);
 const deletepredicate_1 = __nccwpck_require__(205);
 // ####### END DIRTY HACK
+// fix for https://github.com/actions/toolkit/issues/844
+function getBooleanInputFix(name, options, defaultValue) {
+    if (core.getInput(name, options).trim() === '')
+        return defaultValue;
+    return core.getBooleanInput(name, options);
+}
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -112,8 +118,8 @@ function run() {
                 required: false,
                 trimWhitespace: true
             });
-            const deleteIfNoMatch = core.getBooleanInput('delete-if-no-match', { required: false });
-            const dryRun = core.getBooleanInput('dry-run', { required: false });
+            const deleteIfNoMatch = getBooleanInputFix('delete-if-no-match', { required: false }, false);
+            const dryRun = getBooleanInputFix('dry-run', { required: false }, false);
             const outputSeparator = core.getInput('output-separator', { required: false }) || ',';
             const octokit = github.getOctokit(githubToken);
             const branches = yield octokit.paginate(octokit.rest.repos.listBranches, {
