@@ -140,7 +140,7 @@ The app is not hosted, only source code is provided. You have to do your own hos
     branches-delete:
     # If true, branches that do not meet the keel/delete criteria(s) will be deleted
     # default: false
-    delete_if-no-match:
+    delete_if-no-match: false
 
     # If true, no action deletion will occur
     # default: false
@@ -151,7 +151,7 @@ The app is not hosted, only source code is provided. You have to do your own hos
 
     # Token to be used to delete the branches.
     # Default: ${{ github.token }}
-    token:''
+    token: ''
 
 - run: echo we deleted ${{ steps.deletebranches.outputs.deleted-branches }}
 ```
