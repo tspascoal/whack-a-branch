@@ -5,7 +5,7 @@ inputs:
   token:
     required: true
     description: 'GitHub token'
-    default: '{{ github_token }}'
+    default: '${{ github.token }}'
   branches-keep:
     required: false
     description: 'List of patterns (comma separated) of branches to keep.'
