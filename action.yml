@@ -13,7 +13,7 @@ inputs:
   branches-delete:
     required: false
     description: 'List of patterns (comma separated) of branches to delete (wins over branches to keep)'
-  delete_if-no-match:
+  delete-if-no-match:
     required: false
     description: 'Delete branches that do not match the given pattern(s) [dangerous if true]'
     default: 'false'
