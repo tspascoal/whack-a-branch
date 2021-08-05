@@ -120,7 +120,8 @@ function run() {
             });
             const deleteIfNoMatch = getBooleanInputFix('delete-if-no-match', { required: false }, false);
             const dryRun = getBooleanInputFix('dry-run', { required: false }, false);
-            const outputSeparator = core.getInput('output-separator', { required: false }) || ',';
+            // Don't trim whitespace so "\n" gets the right behavior
+            const outputSeparator = core.getInput('output-separator', { required: false, trimWhitespace: false }) || ',';
             const octokit = github.getOctokit(githubToken);
             const branches = yield octokit.paginate(octokit.rest.repos.listBranches, {
                 owner: utils_1.context.repo.owner,

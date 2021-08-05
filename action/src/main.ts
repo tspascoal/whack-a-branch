@@ -40,8 +40,12 @@ export async function run(): Promise<void> {
       {required: false},
       false
     )
+    // Don't trim whitespace so "\n" gets the right behavior
     const outputSeparator: string =
-      core.getInput('output-separator', {required: false}) || ','
+      core.getInput('output-separator', {
+        required: false,
+        trimWhitespace: false
+      }) || ','
 
     const octokit = github.getOctokit(githubToken)
 
