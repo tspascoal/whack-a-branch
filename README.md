@@ -147,7 +147,7 @@ The app is not hosted, only source code is provided. You have to do your own hos
     dry-run: 'true'
     # The separator used to separate the list of deleted branches for the action output.
     # default value: ','.
-    output-separator:
+    output-separator: "\n"
 
     # Token to be used to delete the branches.
     # Default: ${{ github.token }}
