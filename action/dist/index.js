@@ -58,7 +58,7 @@ function shouldDelete(config, ref) {
     return deleteBranch;
 }
 exports.shouldDelete = shouldDelete;
-
+//# sourceMappingURL=deletepredicate.js.map
 
 /***/ }),
 
@@ -167,7 +167,7 @@ function run() {
 }
 exports.run = run;
 run();
-
+//# sourceMappingURL=main.js.map
 
 /***/ }),
 
