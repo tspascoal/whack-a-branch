@@ -1,6 +1,6 @@
 import { Probot } from "probot"
-import { DefaultConfiguration, Configuration } from "../../common/src/configuration"
-import { shouldDelete } from "../../common/src/deletepredicate"
+import { DefaultConfiguration, Configuration } from "../../common/lib/src/configuration"
+import { shouldDelete } from "../../common/lib/src/deletepredicate"
 
 export = (app: Probot): void => {
   app.on("push", async (context) => {
