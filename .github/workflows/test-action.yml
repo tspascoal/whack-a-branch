@@ -24,6 +24,8 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./
         id: deletebranches
-        with: dry-run
+        with: 
+          dry-run: true
+          delete-branches: '**'
       - run: echo ${{ steps.deletebranches.outputs.deleted-branches}}
   
