@@ -158,6 +158,8 @@ The app is not hosted, only source code is provided. You have to do your own hos
 
 See the App configuration section for more information about the parameters.
 
+> Protected branches are not deleted, even if they fall within the deletion criteria.
+
 ## Contributing
 
 If you have suggestions for how whack-a-branch could be improved, or want to report a bug, open an issue! We'd love all and any contributions.
