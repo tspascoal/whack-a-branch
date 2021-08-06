@@ -9,8 +9,6 @@ module.exports = {
   collectCoverage: true,
   reporters: ['default', 'jest-junit'],
   "coveragePathIgnorePatterns": [
-    "node_modules",
-    "<rootDir>/src/common/*.*"
-
+    "node_modules"
   ]
 }

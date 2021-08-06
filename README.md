@@ -27,11 +27,11 @@ npm start
 
 ### Docker
 
-In the `app` directory:
+In the root directory of the project:
 
 ```sh
 # 1. Build container
-docker build -t whack-a-branch .
+docker build -t whack-a-branch . -f app/Dockerfile
 
 # 2. Start container
 docker run -e APP_ID=<app-id> -e PRIVATE_KEY=<pem-value> whack-a-branch

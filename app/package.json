@@ -19,6 +19,7 @@
     "all": "npm run build && npm run lint && npm run test"
   },
   "dependencies": {
+    "minimatch": "^3.0.4",
     "probot": "^12.1.0"
   },
   "devDependencies": {
