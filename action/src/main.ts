@@ -85,7 +85,7 @@ export async function run(): Promise<void> {
           deletionFailures.push(refName)
           continue
         }
-        
+
         core.info(`Deleted ${refName}`)
 
         deletedBranches.push(refName)
@@ -96,10 +96,17 @@ export async function run(): Promise<void> {
 
     core.setOutput('deleted-branches', deletedBranches.join(outputSeparator))
 
-    if(deletionFailures.length) {
-      let deletedMessage = "."
-      if(deletedBranches.length) deletedMessage = `, but still able to delete: [${deletedBranches.join(",")}]`
-      core.error(`Failed to delete [${deletionFailures.join(",")}] branches ${deletedMessage}`)
+    if (deletionFailures.length) {
+      let deletedMessage = '.'
+      if (deletedBranches.length)
+        deletedMessage = `, but still able to delete: [${deletedBranches.join(
+          ','
+        )}]`
+      core.error(
+        `Failed to delete [${deletionFailures.join(
+          ','
+        )}] branches ${deletedMessage}`
+      )
     }
   } catch (error) {
     core.setFailed(error.message)
