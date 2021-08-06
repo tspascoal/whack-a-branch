@@ -65,11 +65,11 @@ export async function run(): Promise<void> {
     for (const branch of branches) {
       const refName = `heads/${branch.name}`
 
-      if (branch.protected) {
-        // Just in case. In the API we only asked for unprotected branches
-        core.info(`Kept protected branch ${refName}`)
-        continue
-      }
+      // if (branch.protected) {
+      //   // Just in case. In the API we only asked for unprotected branches
+      //   core.info(`Kept protected branch ${refName}`)
+      //   continue
+      // }
 
       if (shouldDelete(config, refName)) {
         if (!dryRun) {
