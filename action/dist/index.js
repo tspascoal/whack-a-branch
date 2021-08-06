@@ -69,8 +69,9 @@ function run() {
                 repo: utils_1.context.repo.repo,
                 protected: true
             });
-            core.debug(`found #${branches.length} branches`);
+            core.info(`found #${branches.length} branches`);
             const deletedBranchs = [];
+            const deletionFailures = [];
             const config = {
                 branches: {
                     keep: branchesKeep === null || branchesKeep === void 0 ? void 0 : branchesKeep.split(',').map(s => s.trim()),
@@ -85,6 +86,7 @@ function run() {
                 //   core.info(`Kept protected branch ${refName}`)
                 //   continue
                 // }
+                core.info(`Checking branch ${refName}`);
                 if (deletepredicate_1.shouldDelete(config, refName)) {
                     try {
                         if (!dryRun) {
@@ -96,7 +98,8 @@ function run() {
                         }
                     }
                     catch (e) {
-                        core.error(`Failed to delete ${refName} ${e.message})`);
+                        core.warning(`Failed to delete ${refName} ${e.message}`);
+                        deletionFailures.push(refName);
                         continue;
                     }
                     core.info(`Deleted ${refName}`);
@@ -107,6 +110,9 @@ function run() {
                 }
             }
             core.setOutput('deleted-branches', deletedBranchs.join(outputSeparator));
+            if (deletionFailures.length) {
+                core.error(`Failed to delete ${deletionFailures.join(",")} branches`);
+            }
         }
         catch (error) {
             core.setFailed(error.message);

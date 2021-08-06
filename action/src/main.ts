@@ -51,9 +51,10 @@ export async function run(): Promise<void> {
       protected: true
     })
 
-    core.debug(`found #${branches.length} branches`)
+    core.info(`found #${branches.length} branches`)
 
     const deletedBranchs: string[] = []
+    const deletionFailures: string[] = []
     const config: Configuration = {
       branches: {
         keep: branchesKeep?.split(',').map(s => s.trim()),
@@ -71,6 +72,9 @@ export async function run(): Promise<void> {
       //   continue
       // }
 
+      core.info(`Checking branch ${refName}`)
+
+
       if (shouldDelete(config, refName)) {
         try {
           if (!dryRun) {
@@ -81,7 +85,8 @@ export async function run(): Promise<void> {
             })
           }
         } catch (e) {
-          core.error(`Failed to delete ${refName} ${e.message})`)
+          core.warning(`Failed to delete ${refName} ${e.message}`)
+          deletionFailures.push(refName)
           continue
         }
 
@@ -94,6 +99,10 @@ export async function run(): Promise<void> {
     }
 
     core.setOutput('deleted-branches', deletedBranchs.join(outputSeparator))
+
+    if(deletionFailures.length) {
+      core.error(`Failed to delete ${deletionFailures.join(",")} branches`)
+    }
   } catch (error) {
     core.setFailed(error.message)
   }
