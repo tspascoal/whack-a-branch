@@ -53,7 +53,8 @@ export async function run(): Promise<void> {
 
     core.debug(`found #${branches.length} branches`)
 
-    const deletedBranchs: string[] = []
+    const deletedBranches: string[] = []
+    const deletionFailures: string[] = []
     const config: Configuration = {
       branches: {
         keep: branchesKeep?.split(',').map(s => s.trim()),
@@ -72,22 +73,34 @@ export async function run(): Promise<void> {
       }
 
       if (shouldDelete(config, refName)) {
-        if (!dryRun) {
-          await octokit.rest.git.deleteRef({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            ref: refName
-          })
+        try {
+          if (!dryRun) {
+            await octokit.rest.git.deleteRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: refName
+            })
+          }
+        } catch (e) {
+          deletionFailures.push(refName)
+          continue
         }
+        
         core.info(`Deleted ${refName}`)
 
-        deletedBranchs.push(refName)
+        deletedBranches.push(refName)
       } else {
         core.info(`Kept ${refName}`)
       }
     }
 
-    core.setOutput('deleted-branches', deletedBranchs.join(outputSeparator))
+    core.setOutput('deleted-branches', deletedBranches.join(outputSeparator))
+
+    if(deletionFailures.length) {
+      let deletedMessage = "."
+      if(deletedBranches.length) deletedMessage = `, but still able to delete: [${deletedBranches.join(",")}]`
+      core.error(`Failed to delete [${deletionFailures.join(",")}] branches ${deletedMessage}`)
+    }
   } catch (error) {
     core.setFailed(error.message)
   }

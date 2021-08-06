@@ -70,7 +70,8 @@ function run() {
                 protected: false
             });
             core.debug(`found #${branches.length} branches`);
-            const deletedBranchs = [];
+            const deletedBranches = [];
+            const deletionFailures = [];
             const config = {
                 branches: {
                     keep: branchesKeep === null || branchesKeep === void 0 ? void 0 : branchesKeep.split(',').map(s => s.trim()),
@@ -86,21 +87,33 @@ function run() {
                     continue;
                 }
                 if (deletepredicate_1.shouldDelete(config, refName)) {
-                    if (!dryRun) {
-                        yield octokit.rest.git.deleteRef({
-                            owner: utils_1.context.repo.owner,
-                            repo: utils_1.context.repo.repo,
-                            ref: refName
-                        });
+                    try {
+                        if (!dryRun) {
+                            yield octokit.rest.git.deleteRef({
+                                owner: utils_1.context.repo.owner,
+                                repo: utils_1.context.repo.repo,
+                                ref: refName
+                            });
+                        }
+                    }
+                    catch (e) {
+                        deletionFailures.push(refName);
+                        continue;
                     }
                     core.info(`Deleted ${refName}`);
-                    deletedBranchs.push(refName);
+                    deletedBranches.push(refName);
                 }
                 else {
                     core.info(`Kept ${refName}`);
                 }
             }
-            core.setOutput('deleted-branches', deletedBranchs.join(outputSeparator));
+            core.setOutput('deleted-branches', deletedBranches.join(outputSeparator));
+            if (deletionFailures.length) {
+                let deletedMessage = ".";
+                if (deletedBranches.length)
+                    deletedMessage = `, but still able to delete: [${deletedBranches.join(",")}]`;
+                core.error(`Failed to delete [${deletionFailures.join(",")}] branches ${deletedMessage}`);
+            }
         }
         catch (error) {
             core.setFailed(error.message);
@@ -6245,7 +6258,7 @@ function wrappy (fn, cb) {
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.shouldDelete = void 0;
-const minimatch_1 = __nccwpck_require__(734);
+const minimatch_1 = __nccwpck_require__(866);
 const minimatchOptions = {
     dot: false,
     nobrace: true,
@@ -6299,7 +6312,7 @@ exports.shouldDelete = shouldDelete;
 
 /***/ }),
 
-/***/ 693:
+/***/ 739:
 /***/ ((module) => {
 
 "use strict";
@@ -6369,11 +6382,11 @@ function range(a, b, str) {
 
 /***/ }),
 
-/***/ 35:
+/***/ 829:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
-var concatMap = __nccwpck_require__(237);
-var balanced = __nccwpck_require__(693);
+var concatMap = __nccwpck_require__(156);
+var balanced = __nccwpck_require__(739);
 
 module.exports = expandTop;
 
@@ -6577,7 +6590,7 @@ function expand(str, isTop) {
 
 /***/ }),
 
-/***/ 237:
+/***/ 156:
 /***/ ((module) => {
 
 module.exports = function (xs, fn) {
@@ -6597,7 +6610,7 @@ var isArray = Array.isArray || function (xs) {
 
 /***/ }),
 
-/***/ 734:
+/***/ 866:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 module.exports = minimatch
@@ -6609,7 +6622,7 @@ try {
 } catch (er) {}
 
 var GLOBSTAR = minimatch.GLOBSTAR = Minimatch.GLOBSTAR = {}
-var expand = __nccwpck_require__(35)
+var expand = __nccwpck_require__(829)
 
 var plTypes = {
   '!': { open: '(?:(?!(?:', close: '))[^/]*?)'},
