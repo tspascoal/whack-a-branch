@@ -2,12 +2,8 @@ import * as core from '@actions/core'
 import * as github from '@actions/github'
 import {context} from '@actions/github/lib/utils'
 
-// ######## BEGIN DIRTY HACK
-// workaround for https://github.com/vercel/ncc/issues/320
-// This should be referencing ../../common/src since we are using projects
-import {Configuration} from './common/configuration'
-import {shouldDelete} from './common/deletepredicate'
-// ####### END DIRTY HACK
+import {Configuration} from '../../common/lib/src/configuration'
+import {shouldDelete} from '../../common/lib/src/deletepredicate'
 
 // fix for https://github.com/actions/toolkit/issues/844
 function getBooleanInputFix(

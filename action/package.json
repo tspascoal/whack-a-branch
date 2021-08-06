@@ -5,12 +5,11 @@
   "description": "TypeScript template action",
   "main": "lib/main.js",
   "scripts": {
-    "build": "npm run copy-common && tsc",
-    "copy-common": "mkdir -p src/common && cp -r ../common/src/*.ts src/common",
+    "build": "tsc",
     "format": "prettier --write **/*.ts",
     "format-check": "prettier --check **/*.ts",
     "lint": "eslint src/**/*.ts",
-    "package": "npm run copy-common && ncc build --source-map --license licenses.txt",
+    "package": "ncc build --source-map --license licenses.txt",
     "test": "jest --coverage",
     "all": "npm run build && npm run format && npm run lint &&  npm test && npm run package"
   },
