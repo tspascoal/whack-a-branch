@@ -1,9 +1,9 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
-import {context} from '@actions/github/lib/utils'
+import { context } from '@actions/github/lib/utils'
 
-import {Configuration} from '../../common/lib/src/configuration'
-import {shouldDelete} from '../../common/lib/src/deletepredicate'
+import { Configuration } from '../../common/lib/src/configuration'
+import { shouldDelete } from '../../common/lib/src/deletepredicate'
 
 // fix for https://github.com/actions/toolkit/issues/844
 function getBooleanInputFix(
@@ -18,9 +18,9 @@ function getBooleanInputFix(
 
 export async function run(): Promise<void> {
   try {
-    const githubToken = core.getInput('token', {required: true})
+    const githubToken = core.getInput('token', { required: true })
     const branchesKeep: string =
-      core.getInput('branches-keep', {required: true, trimWhitespace: true}) ||
+      core.getInput('branches-keep', { required: true, trimWhitespace: true }) ||
       '**'
     const branchesDelete: string = core.getInput('branches-delete', {
       required: false,
@@ -28,12 +28,12 @@ export async function run(): Promise<void> {
     })
     const deleteIfNoMatch: boolean = getBooleanInputFix(
       'delete-if-no-match',
-      {required: false},
+      { required: false },
       false
     )
     const dryRun: boolean = getBooleanInputFix(
       'dry-run',
-      {required: false},
+      { required: false },
       false
     )
     // Don't trim whitespace so "\n" gets the right behavior
@@ -72,13 +72,19 @@ export async function run(): Promise<void> {
       // }
 
       if (shouldDelete(config, refName)) {
-        if (!dryRun) {
-          await octokit.rest.git.deleteRef({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            ref: refName
-          })
+        try {
+          if (!dryRun) {
+            await octokit.rest.git.deleteRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: refName
+            })
+          }
+        } catch (e) {
+          core.error(`Failed to delete ${refName} ${e.message})`)
+          continue
         }
+
         core.info(`Deleted ${refName}`)
 
         deletedBranchs.push(refName)

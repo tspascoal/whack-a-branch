@@ -86,12 +86,18 @@ function run() {
                 //   continue
                 // }
                 if (deletepredicate_1.shouldDelete(config, refName)) {
-                    if (!dryRun) {
-                        yield octokit.rest.git.deleteRef({
-                            owner: utils_1.context.repo.owner,
-                            repo: utils_1.context.repo.repo,
-                            ref: refName
-                        });
+                    try {
+                        if (!dryRun) {
+                            yield octokit.rest.git.deleteRef({
+                                owner: utils_1.context.repo.owner,
+                                repo: utils_1.context.repo.repo,
+                                ref: refName
+                            });
+                        }
+                    }
+                    catch (e) {
+                        core.error(`Failed to delete ${refName} ${e.message})`);
+                        continue;
                     }
                     core.info(`Deleted ${refName}`);
                     deletedBranchs.push(refName);
