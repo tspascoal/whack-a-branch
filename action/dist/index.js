@@ -109,10 +109,11 @@ function run() {
             }
             core.setOutput('deleted-branches', deletedBranches.join(outputSeparator));
             if (deletionFailures.length) {
-                let deletedMessage = ".";
-                if (deletedBranches.length)
-                    deletedMessage = `, but still able to delete: [${deletedBranches.join(",")}]`;
-                core.error(`Failed to delete [${deletionFailures.join(",")}] branches ${deletedMessage}`);
+                let stilDeletedMessage = '.';
+                if (deletedBranches.length) {
+                    stilDeletedMessage = `, but still able to delete: [${deletedBranches}]`;
+                }
+                core.setFailed(`Failed to delete [${deletionFailures}] branches ${stilDeletedMessage}`);
             }
         }
         catch (error) {
