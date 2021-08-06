@@ -67,7 +67,7 @@ function run() {
             const branches = yield octokit.paginate(octokit.rest.repos.listBranches, {
                 owner: utils_1.context.repo.owner,
                 repo: utils_1.context.repo.repo,
-                protected: false
+                protected: true
             });
             core.debug(`found #${branches.length} branches`);
             const deletedBranchs = [];
@@ -6245,7 +6245,7 @@ function wrappy (fn, cb) {
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.shouldDelete = void 0;
-const minimatch_1 = __nccwpck_require__(734);
+const minimatch_1 = __nccwpck_require__(866);
 const minimatchOptions = {
     dot: false,
     nobrace: true,
@@ -6299,7 +6299,7 @@ exports.shouldDelete = shouldDelete;
 
 /***/ }),
 
-/***/ 693:
+/***/ 739:
 /***/ ((module) => {
 
 "use strict";
@@ -6369,11 +6369,11 @@ function range(a, b, str) {
 
 /***/ }),
 
-/***/ 35:
+/***/ 829:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
-var concatMap = __nccwpck_require__(237);
-var balanced = __nccwpck_require__(693);
+var concatMap = __nccwpck_require__(156);
+var balanced = __nccwpck_require__(739);
 
 module.exports = expandTop;
 
@@ -6577,7 +6577,7 @@ function expand(str, isTop) {
 
 /***/ }),
 
-/***/ 237:
+/***/ 156:
 /***/ ((module) => {
 
 module.exports = function (xs, fn) {
@@ -6597,7 +6597,7 @@ var isArray = Array.isArray || function (xs) {
 
 /***/ }),
 
-/***/ 734:
+/***/ 866:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 module.exports = minimatch
@@ -6609,7 +6609,7 @@ try {
 } catch (er) {}
 
 var GLOBSTAR = minimatch.GLOBSTAR = Minimatch.GLOBSTAR = {}
-var expand = __nccwpck_require__(35)
+var expand = __nccwpck_require__(829)
 
 var plTypes = {
   '!': { open: '(?:(?!(?:', close: '))[^/]*?)'},

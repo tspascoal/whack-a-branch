@@ -48,7 +48,7 @@ export async function run(): Promise<void> {
     const branches = await octokit.paginate(octokit.rest.repos.listBranches, {
       owner: context.repo.owner,
       repo: context.repo.repo,
-      protected: false
+      protected: true
     })
 
     core.debug(`found #${branches.length} branches`)
