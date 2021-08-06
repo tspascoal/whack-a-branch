@@ -18,6 +18,6 @@ jobs:
         id: deletebranches
         with: 
           dry-run: true
-          delete-branches: '**'
-      - run: echo ${{ steps.deletebranches.outputs.deleted-branches}}
+          branches-delete: '**'
+      - run: echo Deleted (dry-run) '${{ steps.deletebranches.outputs.deleted-branches}}'
   
