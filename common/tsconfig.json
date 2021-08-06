@@ -1,0 +1,10 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "declaration": true /* Generates corresponding '.d.ts' file. */,
+    "outDir": "./lib" /* Redirect output structure to the directory. */,
+    "composite": true,                     /* Enable project compilation */
+  },
+  "include": ["src/"],
+  "compileOnSave": false
+}

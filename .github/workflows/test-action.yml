@@ -1,0 +1,23 @@
+name: 'test action (dist)'
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+    paths:
+      - 'action/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./
+        id: deletebranches
+        with: 
+          dry-run: true
+          branches-delete: '**'
+      - run: echo "Deleted (dry-run)" '${{ steps.deletebranches.outputs.deleted-branches}}'
+  

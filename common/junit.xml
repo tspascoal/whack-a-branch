@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="12" failures="0" errors="0" time="5.163">
+  <testsuite name="DeletePredicate" errors="0" failures="0" skipped="0" timestamp="2021-08-02T09:32:38" time="4.925" tests="12">
+    <testcase classname="DeletePredicate no deletion by default (name only)" name="DeletePredicate no deletion by default (name only)" time="0.003">
+    </testcase>
+    <testcase classname="DeletePredicate no deletion by default with depth 2" name="DeletePredicate no deletion by default with depth 2" time="0.001">
+    </testcase>
+    <testcase classname="DeletePredicate no deletion by default with depth 3" name="DeletePredicate no deletion by default with depth 3" time="0">
+    </testcase>
+    <testcase classname="DeletePredicate no deletion with **" name="DeletePredicate no deletion with **" time="0.004">
+    </testcase>
+    <testcase classname="DeletePredicate no deletion with ** and depth" name="DeletePredicate no deletion with ** and depth" time="0">
+    </testcase>
+    <testcase classname="DeletePredicate delete everything" name="DeletePredicate delete everything" time="0.001">
+    </testcase>
+    <testcase classname="DeletePredicate deletion with override" name="DeletePredicate deletion with override" time="0.001">
+    </testcase>
+    <testcase classname="DeletePredicate deletion with override which specifies heads" name="DeletePredicate deletion with override which specifies heads" time="0">
+    </testcase>
+    <testcase classname="DeletePredicate no deletion with ambiguous rule and deleteIfNoMatch not specified" name="DeletePredicate no deletion with ambiguous rule and deleteIfNoMatch not specified" time="0.001">
+    </testcase>
+    <testcase classname="DeletePredicate delete with ambiguous rule and deleteIfNoMatch set to true" name="DeletePredicate delete with ambiguous rule and deleteIfNoMatch set to true" time="0.001">
+    </testcase>
+    <testcase classname="DeletePredicate delete anything with more than one level" name="DeletePredicate delete anything with more than one level" time="0.001">
+    </testcase>
+    <testcase classname="DeletePredicate deletion with different casing" name="DeletePredicate deletion with different casing" time="0">
+    </testcase>
+  </testsuite>
+</testsuites>

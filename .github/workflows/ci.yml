@@ -9,7 +9,8 @@ on:
       - main
 
 jobs:
-  CodeQL-Build:
+  CodeQL:
+    name: "CodeQL Code Analysis"
 
     runs-on: ubuntu-latest
 
@@ -23,11 +24,6 @@ jobs:
       with:
         languages: javascript
         config-file: ./.github/codeql/codeql-config.yml
-
-    - run: npm ci
-      working-directory: app
-    - run: npm run build
-      working-directory: app
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
@@ -44,18 +40,58 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - run: npm ci
-    - run: npm run all
+    - name: install dependencies common
+      run: npm ci
+      working-directory: common
+    - name: install dependencies app
+      run: npm ci
+      working-directory: app
+    - name: install dependencies action
+      run: npm ci
+      working-directory: action
+    - name: build app
+      run: npm run build
+      working-directory: app
+
+    - name: test common
+      run: npm run test
+      working-directory: common
+
+    - name: build and test action
+      run: npm run all
+      working-directory: action
+
+    - name: build and test app
+      run: npm run all
+      working-directory: app
+
     
     - name: Publish Unit Test Results
       uses: EnricoMi/publish-unit-test-result-action@v1
       if: always()
       with:
-        files: 'app/reports/**/junit.xml'
+        files: |
+          common/reports/junit.xml
+          app/reports/**/junit.xml
+          action/reports/junit.xml
 
-    - uses: danhunsaker/clover-reporter-action@v0.2.17-clover
+    - name: publish coverage for common
+      uses: danhunsaker/clover-reporter-action@v0.2.17-clover
+      if: github.event_name == 'pull_request'
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        clover-file: common/coverage/clover.xml
+
+    - name: publish coverage for common
+      uses: danhunsaker/clover-reporter-action@v0.2.17-clover
       if: github.event_name == 'pull_request'
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         clover-file: app/coverage/clover.xml
 
+    - name: publish coverage for common
+      uses: danhunsaker/clover-reporter-action@v0.2.17-clover
+      if: github.event_name == 'pull_request'
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        clover-file: action/coverage/clover.xml

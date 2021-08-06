@@ -1,7 +1,4 @@
-// You can import your modules
-// import index from '../src/index'
-
-import { DeletePredicate } from "../src/deletepredicate"
+import { shouldDelete } from "../src/deletepredicate"
 import { Configuration } from "../src/configuration"
 
 describe("DeletePredicate", () => {
@@ -10,27 +7,27 @@ describe("DeletePredicate", () => {
 
     const config: Configuration = {}
 
-    const shouldDelete = DeletePredicate.shouldDelete(config, "heads/main")
+    const deleteIt = shouldDelete(config, "heads/main")
 
-    expect(shouldDelete).toBeFalsy()
+    expect(deleteIt).toBeFalsy()
   })
 
   test("no deletion by default with depth 2", () => {
 
     const config: Configuration = {}
 
-    const shouldDelete = DeletePredicate.shouldDelete(config, "heads/dev/feature-2")
+    const deleteIt = shouldDelete(config, "heads/dev/feature-2")
 
-    expect(shouldDelete).toBeFalsy()
+    expect(deleteIt).toBeFalsy()
   })
 
   test("no deletion by default with depth 3", () => {
 
     const config: Configuration = { }
 
-    const shouldDelete = DeletePredicate.shouldDelete(config, "heads/dev/feature-2/fixes")
+    const deleteIt = shouldDelete(config, "heads/dev/feature-2/fixes")
 
-    expect(shouldDelete).toBeFalsy()
+    expect(deleteIt).toBeFalsy()
   })
 
 
@@ -43,9 +40,9 @@ describe("DeletePredicate", () => {
       }
     }
 
-    const shouldDelete = DeletePredicate.shouldDelete(config, "heads/main")
+    const deleteIt = shouldDelete(config, "heads/main")
 
-    expect(shouldDelete).toBeFalsy()
+    expect(deleteIt).toBeFalsy()
   })
 
   test("no deletion with ** and depth", () => {
@@ -57,9 +54,9 @@ describe("DeletePredicate", () => {
       }
     }
 
-    const shouldDelete = DeletePredicate.shouldDelete(config, "heads/main")
+    const deleteIt = shouldDelete(config, "heads/main")
 
-    expect(shouldDelete).toBeFalsy()
+    expect(deleteIt).toBeFalsy()
   })
 
 
@@ -72,9 +69,9 @@ describe("DeletePredicate", () => {
       }
     }
 
-    const shouldDelete = DeletePredicate.shouldDelete(config, "heads/hello")
+    const deleteIt = shouldDelete(config, "heads/hello")
 
-    expect(shouldDelete).toBeTruthy()
+    expect(deleteIt).toBeTruthy()
   })
 
   test("deletion with override", () => {
@@ -87,9 +84,9 @@ describe("DeletePredicate", () => {
       }
     }
 
-    const shouldDelete = DeletePredicate.shouldDelete(config, "heads/mybranch")
+    const deleteIt = shouldDelete(config, "heads/mybranch")
 
-    expect(shouldDelete).toBeTruthy()
+    expect(deleteIt).toBeTruthy()
   })
 
   test("deletion with override which specifies heads", () => {
@@ -102,9 +99,9 @@ describe("DeletePredicate", () => {
       }
     }
 
-    const shouldDelete = DeletePredicate.shouldDelete(config, "heads/mybranch")
+    const deleteIt = shouldDelete(config, "heads/mybranch")
 
-    expect(shouldDelete).toBeTruthy()
+    expect(deleteIt).toBeTruthy()
   })
 
   test("no deletion with ambiguous rule and deleteIfNoMatch not specified", () => {
@@ -116,9 +113,9 @@ describe("DeletePredicate", () => {
       }
     }
 
-    const shouldDelete = DeletePredicate.shouldDelete(config, "heads/NOTINTHELIST")
+    const deleteIt = shouldDelete(config, "heads/NOTINTHELIST")
 
-    expect(shouldDelete).toBeFalsy()
+    expect(deleteIt).toBeFalsy()
   })
 
   test("delete with ambiguous rule and deleteIfNoMatch set to true", () => {
@@ -130,9 +127,9 @@ describe("DeletePredicate", () => {
       }
     }
 
-    const shouldDelete = DeletePredicate.shouldDelete(config, "heads/NOTINTHELIST")
+    const deleteIt = shouldDelete(config, "heads/NOTINTHELIST")
 
-    expect(shouldDelete).toBeTruthy()
+    expect(deleteIt).toBeTruthy()
   })
 
   test("delete anything with more than one level", () => {
@@ -144,12 +141,12 @@ describe("DeletePredicate", () => {
       }
     }
 
-    const shouldDelete = DeletePredicate.shouldDelete(config, "heads/dev/test")
-    const shouldDeleteMaster = DeletePredicate.shouldDelete(config, "heads/master")
+    const deleteIt = shouldDelete(config, "heads/dev/test")
+    const deleteMaster = shouldDelete(config, "heads/master")
 
 
-    expect(shouldDelete).toBeTruthy()    
-    expect(shouldDeleteMaster).toBeFalsy()
+    expect(deleteIt).toBeTruthy()    
+    expect(deleteMaster).toBeFalsy()
   })
 
   test("deletion with different casing", () => {
@@ -161,8 +158,8 @@ describe("DeletePredicate", () => {
       }
     }
 
-    const shouldDelete = DeletePredicate.shouldDelete(config, "heads/master")
+    const deleteIt = shouldDelete(config, "heads/master")
   
-    expect(shouldDelete).toBeTruthy()
+    expect(deleteIt).toBeTruthy()
   })
 })

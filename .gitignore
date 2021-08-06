@@ -8,3 +8,5 @@ lib
 
 .vscode
 reports
+
+*.tsbuildinfo

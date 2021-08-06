@@ -2,5 +2,9 @@ name: "codeql ignore dist config"
 
 paths:
   - app/src
+  - common/src
+  - action/src
 paths-ignore:
   - app/lib
+  - common/lib
+  - action/dist

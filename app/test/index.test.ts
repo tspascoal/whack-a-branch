@@ -1,10 +1,16 @@
-import nock from "nock";
-import whackABranchApp from "../src";
-import { Probot, ProbotOctokit } from "probot";
+import nock from "nock"
+import whackABranchApp from "../src"
+import { Probot, ProbotOctokit} from "probot"
+import {
+  expect,
+  test,
+  describe,
+  beforeEach,
+  afterEach
+} from '@jest/globals'
 
 // Requiring our fixtures
 import payload_push from "./fixtures/push.json"
-// const issueCreatedBody = { body: "Thanks for opening this issue!" };
 
 const fs = require("fs");
 const path = require("path");
@@ -15,7 +21,7 @@ const privateKey = fs.readFileSync(
 );
 
 describe("whack-a-branch", () => {
-  let probot: any;
+  let probot: any
 
   beforeEach(() => {
     nock.disableNetConnect();
@@ -27,7 +33,8 @@ describe("whack-a-branch", () => {
         retry: { enabled: false },
         throttle: { enabled: false },
       }),
-    });
+      logLevel: "fatal" // reduce log noise for testing
+    })
     probot.load(whackABranchApp)
 
     nock('https://api.github.com')
@@ -43,7 +50,12 @@ branches:
   delete:
   - 'delete*'
   `)
-  });
+  })
+
+  afterEach(() => {
+    nock.cleanAll();
+    nock.enableNetConnect();
+  })
 
   test("delete branch", async () => {
     nock("https://api.github.com")
@@ -167,10 +179,5 @@ branches:
 
     // delete was not called
     expect(deleteMock.pendingMocks()).toContain("DELETE https://api.github.com:443/repos/tspascoal/test/git/refs/heads%2Fdeleteme")
-  })
-
-  afterEach(() => {
-    nock.cleanAll();
-    nock.enableNetConnect();
   })
 })
