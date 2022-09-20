@@ -1,6 +1,6 @@
 # whack-a-branch
 
-> This solution is now considerated deprecated, GitHub can not block creation of [branches out of the box](https://github.blog/changelog/2022-05-05-block-creation-of-branches-that-have-matching-names/)
+> This solution is now considerated deprecated, GitHub can now block creation of [branches out of the box](https://github.blog/changelog/2022-05-05-block-creation-of-branches-that-have-matching-names/)
 
 > A solution to delete branches that do not meet your defined criteria in terms of naming.
 
